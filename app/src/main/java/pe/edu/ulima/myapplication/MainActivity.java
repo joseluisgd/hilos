@@ -24,44 +24,8 @@ public class MainActivity extends AppCompatActivity {
         but.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ThreadPoolExecutor poolExecutor=new ThreadPoolExecutor(
-                        5,
-                        5,
-                        60l,
-                        TimeUnit.SECONDS,
-                        new LinkedBlockingQueue<Runnable>()
-                );
-
-
-                final Runnable porcionUI = new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(MainActivity.this, "PRUEBITA", Toast.LENGTH_SHORT).show();
-                    }
-                };
-
-                final Handler handler= new Handler();
-
-
-                for(int i=0;i<5 ; i++){
-                    final int cont=i;
-                    poolExecutor.execute(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                Thread.sleep(3000);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                            Log.i("MainActivity","Cont: "+cont);
-                            handler.post(porcionUI);
-                        }
-                    });
-                }
-
-
-
-
+                TareaComplejaTask tarea = new TareaComplejaTask();
+                tarea.execute("Param1","Param2");
             }
         });
 
